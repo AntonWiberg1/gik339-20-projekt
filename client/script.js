@@ -8,33 +8,66 @@ function fetchData() {
     .then((result) => result.json())
     .then((movies) => {
       if (movies.length > 0) {
+
+        // Sortera filmer efter pris i stigande ordning
+        movies.sort((a, b) => a.price - b.price);
+
         let html = `<ul class="w-3/4 my-3 mx-auto flex flex-wrap gap-2 justify-center">`;
         movies.forEach((movie) => {
+          //färger för pris skillnader
+          let bgColor = getColorClass(movie.price, "bg");
+          let textColor = getColorClass(movie.price, "text");
+          let borderColor = getColorClass(movie.price, "border");
+
           html += `
-        <li
-          class="bg-${movie.price}-200 basis-1/4 text-${movie.price}-900 p-2 rounded-md border-2 border-${movie.price}-400 flex flex-col justify-between">
-          <h3>Title: ${movie.title}</h3>
-          <p>Release date: ${movie.releaseDate}</p>
-          <p>Director: ${movie.director}</p>
-          <p>Price: ${movie.price}</p>
-          <div>
-            <button
-              class="border border-${movie.price}-300 hover:bg-white/100 rounded-md bg-white/50 p-1 text-sm mt-2" onclick="setCurrentMovie(${movie.id})">
-              Update
-            </button>
-            <button class="border border-${movie.price}-300 hover:bg-white/100 rounded-md bg-white/50 p-1 text-sm mt-2" onclick="deleteMovie(${movie.id})">
-              Delete
-            </button>
-          </div>
-        </li>`;
+            <li class="${bgColor} basis-1/4 ${textColor} p-2 rounded-md border-2 ${borderColor} flex flex-col justify-between">
+              <h3>Title: ${movie.title}</h3>
+              <p>Release date: ${movie.releaseDate}</p>
+              <p>Director: ${movie.director}</p>
+              <p>Price: ${movie.price}</p>
+              <div>
+                <button
+                  class="border ${borderColor} rounded-md bg-white/50 p-1 text-sm mt-2"
+                  onclick="setCurrentMovie(${movie.id})"
+                >
+                  Update
+                </button>
+                <button
+                  class="border ${borderColor} rounded-md bg-white/50 p-1 text-sm mt-2"
+                  onclick="deleteMovie(${movie.id})"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>`;
         });
         html += `</ul>`;
-
-        const listContainer = document.getElementById('listContainer');
-        listContainer.innerHTML = '';
-        listContainer.insertAdjacentHTML('beforeend', html);
+        document.getElementById("listContainer").innerHTML = html;
       }
     });
+}
+
+//Funktionen för färg baserat på pris
+function getColorClass(price, type) {
+  if (type === "text") {
+    // Textfärger för kontrast
+    if (price < 100) {
+      return `${type}-black`; // Svart text på grön bakgrund
+    } else if (price >= 100 && price < 200) {
+      return `${type}-black`; // Svart text på gul bakgrund
+    } else {
+      return `${type}-white`; // Vit text på röd bakgrund
+    }
+  }
+
+  // Bakgrunds och kantfärger
+  if (price < 100) {
+    return `${type}-green-300`; // Låg prisnivå
+  } else if (price >= 100 && price < 200) {
+    return `${type}-yellow-300`; // Mellanpris
+  } else {
+    return `${type}-red-300`; // Högt pris
+  }
 }
 
 function setCurrentMovie(id) {

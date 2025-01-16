@@ -2,7 +2,7 @@ const url = 'http://localhost:3000/movies';
 
 window.addEventListener('load', fetchData);
 
-// HTML KODEN som är kopplad till color behöver ändras, Det här styr färgen i hennes kod men vi har price istället som 4e värde i databasen. Vi får fundera på den ex rad 15
+
 function fetchData() {
   fetch(url)
     .then((result) => result.json())

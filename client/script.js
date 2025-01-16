@@ -77,13 +77,20 @@ function setCurrentMovie(id) {
     .then((result) => result.json())
     .then((movie) => {
       console.log(movie);
-      movieForm.title.value = movie.title;
-      movieForm.releaseDate.value = movie.releaseDate;
-      movieForm.price.value = movie.price;
-      movieForm.director.value = movie.director;
+
+      document.getElementById('updateTitle').value = movie.title;
+      document.getElementById('updateReleaseDate').value = movie.releaseDate;
+      document.getElementById('updatePrice').value = movie.price;
+      document.getElementById('updateDirector').value = movie.director;
 
       localStorage.setItem('currentId', movie.id);
+
+      document.getElementById('updateModal').classList.remove('hidden');
     });
+}
+
+function closeModal() {
+  document.getElementById('updateModal').classList.add('hidden');
 }
 
 function deleteMovie(id) {
@@ -92,6 +99,7 @@ function deleteMovie(id) {
 }
 
 movieForm.addEventListener('submit', handleSubmit);
+updateModal.addEventListener('submit', handleSubmit);
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -101,10 +109,21 @@ function handleSubmit(e) {
     director: '',
     price: ''
   };
-  serverMovieObject.title = movieForm.title.value;
-  serverMovieObject.releaseDate = movieForm.releaseDate.value;
-  serverMovieObject.director = movieForm.director.value;
-  serverMovieObject.price = movieForm.price.value;
+
+  /* kollar vilken form vi arbetar med */
+  if (e.target.id === 'modalMovieForm') {
+    serverMovieObject.title = modalMovieForm.updateTitle.value;
+    serverMovieObject.releaseDate = modalMovieForm.updateReleaseDate.value;
+    serverMovieObject.director = modalMovieForm.updateDirector.value;
+    serverMovieObject.price = modalMovieForm.updatePrice.value;
+  } else {
+    serverMovieObject.title = movieForm.title.value;
+    serverMovieObject.releaseDate = movieForm.releaseDate.value;
+    serverMovieObject.director = movieForm.director.value;
+    serverMovieObject.price = movieForm.price.value;
+  }
+
+
 
   const id = localStorage.getItem('currentId');
   if (id) {

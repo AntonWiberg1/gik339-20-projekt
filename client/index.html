@@ -43,6 +43,37 @@
         <div id="listContainer" class="sm:col-span-8 md:col-span-10 lg:col-span-12 bg-slate-800/50 p-3 rounded-lg"></div>
       </div>
     </main>
+
+    <!-- Modal har hidden tills man klickar på knappen -->
+    <div id="updateModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden text-black">
+      <div class="bg-gray-200 p-6 rounded-lg w-96">
+        <h2 class="text-2xl mb-4">Update Movie</h2>
+        <form id="modalMovieForm">
+          <div class="form-control my-4 mx-auto flex items-center">
+            <label for="updateTitle" class="mr-4 text-xl w-40">Title</label>
+            <input class="text-slate-800 p-1 flex-1 rounded-md" type="text" id="updateTitle" name="title" required />
+          </div>
+          <div class="form-control my-4 mx-auto flex items-center">
+            <label for="updateReleaseDate" class="mr-4 text-xl w-40">Release Date</label>
+            <input class="text-slate-800 p-1 flex-1 rounded-md" type="date" id="updateReleaseDate" name="releaseDate" required />
+          </div>
+          <div class="form-control my-4 mx-auto flex items-center">
+            <label for="updateDirector" class="mr-4 text-xl w-40">Director</label>
+            <input class="text-slate-800 p-1 flex-1 rounded-md" type="text" id="updateDirector" name="director" required />
+          </div>
+          <div class="form-control my-4 mx-auto flex items-center">
+            <label for="updatePrice" class="mr-4 text-xl w-40">Price</label>
+            <input class="text-slate-800 p-1 flex-1 rounded-md" type="number" min="0" id="updatePrice" name="price" required />
+          </div>
+          <div class="form-control my-4 mx-auto flex items-center justify-end gap-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-1 bg-slate-200 text-slate-800 rounded-md hover:bg-slate-300">
+              Close
+            </button>
+            <button type="submit" class="px-4 py-1 bg-slate-200 text-slate-800 rounded-md hover:bg-slate-300">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

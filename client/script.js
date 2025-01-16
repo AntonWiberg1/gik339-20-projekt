@@ -95,6 +95,7 @@ function closeModal() {
 
 function deleteMovie(id) {
   console.log('delete', id);
+  alert("movie deleted!")
   fetch(`${url}/${id}`, { method: 'DELETE' }).then((result) => fetchData());
 }
 
@@ -139,6 +140,14 @@ function handleSubmit(e) {
   });
 
   fetch(request).then((response) => {
+    if (response.ok) {
+      if (serverMovieObject.id) { //om resursen vi håller på med redan har ett ID vet vi att det är en film som har blivit uppdaterad
+        alert('Film Uppdaterad!');
+      } else {
+        alert('Film tillagd!');
+      }
+    }
+
     fetchData();
 
     localStorage.removeItem('currentId');

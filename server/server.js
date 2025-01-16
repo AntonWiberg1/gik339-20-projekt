@@ -1,3 +1,5 @@
+// grupp 20 GIK399 Dynamiska webbaplikationer
+
 const sqlite = require('sqlite3').verbose();
 const db = new sqlite.Database("./movies.db"); 
 
